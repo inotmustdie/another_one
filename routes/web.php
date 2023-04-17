@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get( '/', function () {
+//    return view( 'welcome' );
+//} );
+
+Route::prefix( 'file_import' )->middleware( 'auth.basic' )->group( function () {
+    Route::get( '/', "FileImportController@importView" );
+    Route::post( '/parse', "FileImportController@import" )->name( 'file-import' );
+    Route::get( '/showData', "FileImportController@showData" );
+} );
